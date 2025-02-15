@@ -1,0 +1,94 @@
+import os
+import zipfile
+
+# Crear estructura de carpetas
+os.makedirs('proyecto/app', exist_ok=True)
+os.makedirs('proyecto/tests', exist_ok=True)
+
+# Crear calculadora.py
+calculadora_code = """
+# app/calculadora.py
+
+def suma(a, b):
+    \"\"\"Suma dos números.\"\"\"
+    return a + b
+
+def division(a, b):
+    \"\"\"Divide dos números.\"\"\"
+    if b == 0:
+        raise ValueError("No se puede dividir entre cero")
+    return a / b
+"""
+
+with open('proyecto/app/calculadora.py', 'w') as f:
+    f.write(calculadora_code)
+
+# Crear test_calculadora.py
+test_code = """
+# tests/test_calculadora.py
+import pytest
+from app.calculadora import suma, division
+
+# Caso de Uso 1: Pruebas para la función suma
+def test_suma_positivos():
+    \"\"\"Prueba la suma de números positivos.\"\"\"
+    assert suma(5, 3) == 8
+
+def test_suma_negativos():
+    \"\"\"Prueba la suma de números negativos.\"\"\"
+    assert suma(-2, -4) == -6
+
+def test_suma_mixtos():
+    \"\"\"Prueba la suma de números positivos y negativos.\"\"\"
+    assert suma(-2, 5) == 3
+
+# Caso de Uso 2: Pruebas para la función división
+def test_division_valida():
+    \"\"\"Prueba la división de dos números.\"\"\"
+    assert division(10, 2) == 5.0
+
+def test_division_negativos():
+    \"\"\"Prueba la división de números negativos.\"\"\"
+    assert division(-10, -2) == 5.0
+
+def test_division_por_cero():
+    \"\"\"Prueba la división por cero (debe lanzar ValueError).\"\"\"
+    with pytest.raises(ValueError, match="No se puede dividir entre cero"):
+        division(10, 0)
+"""
+
+with open('proyecto/tests/test_calculadora.py', 'w') as f:
+    f.write(test_code)
+
+# Crear README.md
+readme_content = """
+# Pruebas Unitarias para la Calculadora
+
+## Descripción
+Este proyecto contiene pruebas unitarias para dos casos de uso:
+- **Caso de Uso 1:** Validación de la función `suma()`.
+- **Caso de Uso 2:** Validación de la función `division()`.
+
+## 📌 Pruebas Implementadas
+### 1️⃣ Caso de Uso 1: Pruebas de `suma()`
+- `test_suma_positivos`: Verifica la suma de números positivos.  
+- `test_suma_negativos`: Verifica la suma de números negativos.  
+- `test_suma_mixtos`: Verifica la suma de positivos y negativos.  
+
+### 2️⃣ Caso de Uso 2: Pruebas de `division()`
+- `test_division_valida`: Verifica una división válida.  
+- `test_division_negativos`: Verifica la división de negativos.  
+- `test_division_por_cero`: Verifica que la división por cero lance un `ValueError`.  
+
+---
+
+## ⚙️ **Requisitos Previos**
+- Python 3.10 o superior  
+- `pip` (administrador de paquetes de Python)  
+- `pytest` (framework para pruebas)  
+
+## 💻 **Instrucciones para Ejecutar las Pruebas**
+
+1. **Instalar dependencias:**  
+   ```bash
+   pip install pytest
